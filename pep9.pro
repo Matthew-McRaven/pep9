@@ -3,6 +3,8 @@
 # #####################################################################
 TEMPLATE = app
 TARGET = Pep9
+PEP9_VERSION = 91
+
 DEPENDPATH += .
 INCLUDEPATH += .
 QT += webenginewidgets
@@ -12,42 +14,13 @@ QT += printsupport
 # Mac icon/plist
 ICON = images/pep9.icns
 QMAKE_INFO_PLIST = app.plist
-QMAKE_MAC_SDK = macosx10.12
+QMAKE_MAC_SDK = macosx10.13
 
 # Windows RC file
 RC_FILE = pep9resources.rc
 
 # Input
-HEADERS += mainwindow.h \
-    sourcecodepane.h \
-    objectcodepane.h \
-    cpupane.h \
-    assemblerlistingpane.h \
-    memorytracepane.h \
-    memorydumppane.h \
-    inputpane.h \
-    outputpane.h \
-    terminalpane.h \
-    redefinemnemonicsdialog.h \
-    pep.h \
-    byteconverterhex.h \
-    byteconverterdec.h \
-    byteconverterchar.h \
-    byteconverterbin.h \
-    pep.h \
-    helpdialog.h \
-    listingtracepane.h \
-    asm.h \
-    code.h \
-    argument.h \
-    sim.h \
-    enu.h \
-    pephighlighter.h \
-    cpphighlighter.h \
-    aboutpep.h \
-    memorycellgraphicsitem.h \
-    stackframefsm.h \
-    byteconverterinstr.h \
+HEADERS += \
     aboutpep.h \
     argument.h \
     asm.h \
@@ -77,53 +50,8 @@ HEADERS += mainwindow.h \
     sourcecodepane.h \
     stackframefsm.h \
     terminalpane.h
-FORMS += mainwindow.ui \
-    sourcecodepane.ui \
-    objectcodepane.ui \
-    cpupane.ui \
-    assemblerlistingpane.ui \
-    memorytracepane.ui \
-    memorydumppane.ui \
-    inputpane.ui \
-    outputpane.ui \
-    terminalpane.ui \
-    redefinemnemonicsdialog.ui \
-    byteconverterhex.ui \
-    byteconverterdec.ui \
-    byteconverterchar.ui \
-    byteconverterbin.ui \
-    helpdialog.ui \
-    listingtracepane.ui \
-    aboutpep.ui \
-    byteconverterinstr.ui
-SOURCES += main.cpp \
-    mainwindow.cpp \
-    sourcecodepane.cpp \
-    objectcodepane.cpp \
-    cpupane.cpp \
-    assemblerlistingpane.cpp \
-    memorytracepane.cpp \
-    memorydumppane.cpp \
-    inputpane.cpp \
-    outputpane.cpp \
-    terminalpane.cpp \
-    redefinemnemonicsdialog.cpp \
-    byteconverterhex.cpp \
-    byteconverterdec.cpp \
-    byteconverterchar.cpp \
-    byteconverterbin.cpp \
-    pep.cpp \
-    helpdialog.cpp \
-    listingtracepane.cpp \
-    asm.cpp \
-    code.cpp \
-    sim.cpp \
-    pephighlighter.cpp \
-    cpphighlighter.cpp \
-    aboutpep.cpp \
-    memorycellgraphicsitem.cpp \
-    stackframefsm.cpp \
-    byteconverterinstr.cpp \
+
+SOURCES += \
     aboutpep.cpp \
     asm.cpp \
     assemblerlistingpane.cpp \
@@ -151,31 +79,27 @@ SOURCES += main.cpp \
     sim.cpp \
     sourcecodepane.cpp \
     stackframefsm.cpp \
-    terminalpane.cpp \
-    help/figures/fig0519.c \
-    help/figures/fig0522.c \
-    help/figures/fig0527.c \
-    help/figures/fig0604.c \
-    help/figures/fig0606.c \
-    help/figures/fig0608.c \
-    help/figures/fig0610.c \
-    help/figures/fig0612.c \
-    help/figures/fig0614.c \
-    help/figures/fig0618.c \
-    help/figures/fig0621.c \
-    help/figures/fig0623.c \
-    help/figures/fig0625.c \
-    help/figures/fig0627.c \
-    help/figures/fig0629.c \
-    help/figures/fig0632.c \
-    help/figures/fig0634.c \
-    help/figures/fig0636.c \
-    help/figures/fig0638.c \
-    help/figures/fig0640.c \
-    help/figures/fig0642.c \
-    help/figures/fig0644.c \
-    help/figures/fig0646.c \
-    help/figures/fig0648.c
+    terminalpane.cpp
+
+FORMS += mainwindow.ui \
+    sourcecodepane.ui \
+    objectcodepane.ui \
+    cpupane.ui \
+    assemblerlistingpane.ui \
+    memorytracepane.ui \
+    memorydumppane.ui \
+    inputpane.ui \
+    outputpane.ui \
+    terminalpane.ui \
+    redefinemnemonicsdialog.ui \
+    byteconverterhex.ui \
+    byteconverterdec.ui \
+    byteconverterchar.ui \
+    byteconverterbin.ui \
+    helpdialog.ui \
+    listingtracepane.ui \
+    aboutpep.ui \
+    byteconverterinstr.ui
 RESOURCES += pep9resources.qrc \
     helpresources.qrc
 
@@ -189,3 +113,84 @@ DISTFILES += \
     packages/pep9/package.xml \
     config/DeployMac.txt \
     packages/pep9/License.txt
+
+#Generic paths that make future parts of the code easier
+QtDir = $$clean_path($$[QT_INSTALL_LIBS]/..)
+QtInstallerBin=$$clean_path($$QtDir/../../tools/Qtinstallerframework/3.0/bin)
+OutputInstallerName=Pep"$$PEP9_VERSION"
+#All that needs to be done for mac is to run the DMG creator.
+#The DMG creator will only be run in Release mode, not debug.
+!CONFIG(debug,debug|release):macx{
+    #For some reason, the release flag is set in both debug and release.
+    #So, the above Config(...) makes it so a disk image is only built in release mode.
+
+    #Create necessary directory structure for disk image.
+    QMAKE_POST_LINK += $${QMAKE_MKDIR} $$OUT_PWD/Installer;
+    #Copy over the executable and bundle it with its dependencies
+    QMAKE_POST_LINK += $${QMAKE_COPY_DIR} $$OUT_PWD/Pep9.app $$OUT_PWD/Installer;
+    QMAKE_POST_LINK += $$QtDir/bin/macdeployqt $$OUT_PWD/Installer/Pep9.app;
+    #Use HDIUtil to make a folder into a read/write image
+    QMAKE_POST_LINK += hdiutil create -volname Pep9 -srcfolder $$OUT_PWD/Installer -attach -ov -format UDRW Pep9Temp.dmg;
+    #Link from the read/write image to the machine's Applications folder
+    QMAKE_POST_LINK += ln -s /Applications /Volumes/Pep9/Applications;
+    #Unmount the image, and create a new compressed, readonly image.
+    QMAKE_POST_LINK += hdiutil detach /Volumes/Pep9;
+    QMAKE_POST_LINK += $${QMAKE_COPY} $$OUT_PWD/Pep9Temp.dmg $$OUT_PWD/Pep9Temp2.dmg;
+    QMAKE_POST_LINK += hdiutil convert -format UDBZ -o $$OUT_PWD/$$OutputInstallerName"Mac.dmg" $$OUT_PWD/Pep9Temp2.dmg;
+    #Remove the temporary read/write image.
+    QMAKE_POST_LINK += $${QMAKE_DEL_FILE} $$OUT_PWD/Pep9Temp.dmg;
+    QMAKE_POST_LINK += $${QMAKE_DEL_FILE} $$OUT_PWD/Pep9Temp2.dmg;
+    #If QMAKE_POST_LINK stops working in a future version, QMAKE provides another way to add custom targets.
+    #Use the method described in "Adding Custom Targets" on http://doc.qt.io/qt-5/qmake-advanced-usage.html.
+    #Our deployment tool will be called anytime the application is sucessfully linked in release mode.
+}
+
+#Otherwise if the target is windows, but no installer framework exists
+else:!CONFIG(debug,debug|release):win32:!exists($$QtInstallerBin/repogen.exe){
+    warning("Aborting installer creations, since QT Installer Framework 3.0 is not installed.")
+    warning("Please run the QT maintence tool and install QT Installer Framework 3.0.")
+}
+    #Otherwise build the installer for windows as normal.
+else:!CONFIG(debug,debug|release):win32{
+    repoDir=$$OUT_PWD/Repository/win32
+    #Create installer directory structure
+    QMAKE_POST_LINK += $${QMAKE_MKDIR} \"$$OUT_PWD/Installer\" & \
+        $${QMAKE_MKDIR} \"$$OUT_PWD/Installer/packages\" & \
+        $${QMAKE_MKDIR} \"$$OUT_PWD/Installer/packages/pep9cpu\" & \
+        $${QMAKE_MKDIR} \"$$OUT_PWD/Installer/packages/pep9cpu/meta\" & \
+        $${QMAKE_MKDIR} \"$$OUT_PWD/Installer/packages/pep9cpu/data\" & \
+        $${QMAKE_MKDIR} \"$$OUT_PWD/Installer/config\" &
+    #Create a directory for update information
+    !exists($$repoDir){
+        QMAKE_POST_LINK += $${QMAKE_MKDIR} \"$$repoDir\" &
+    }
+    #Copy over files needed to create installer
+    QMAKE_POST_LINK += $${QMAKE_COPY} \"$$shell_path($$PWD\config\configwin32.xml)\" \"$$shell_path($$OUT_PWD/Installer/config/config.xml)\" & \
+        $${QMAKE_COPY} \"$$shell_path($$PWD/images/icon.ico)\" \"$$shell_path($$OUT_PWD/Installer/config)\" & \
+        $${QMAKE_COPY} \"$$shell_path($$PWD/images/Pep9cpu-icon.png)\" \"$$shell_path($$OUT_PWD/Installer/config)\" & \
+        $${QMAKE_COPY} \"$$shell_path($$PWD/packages/pep9cpu/package.xml)\" \"$$shell_path($$OUT_PWD/Installer/packages/pep9cpu/meta)\" & \
+        $${QMAKE_COPY} \"$$shell_path($$PWD/packages/pep9cpu/License.txt)\" \"$$shell_path($$OUT_PWD/Installer/packages/pep9cpu/meta)\" & \
+        $${QMAKE_COPY} \"$$shell_path($$PWD/packages/pep9cpu/installscript.js)\" \"$$shell_path($$OUT_PWD/Installer/packages/pep9cpu/meta)\" & \
+        $${QMAKE_COPY} \"$$shell_path($$PWD/config/control.js)\" \"$$shell_path($$OUT_PWD/Installer/config)\" &
+    #Copy over executable
+    QMAKE_POST_LINK +=  $${QMAKE_COPY} \"$$shell_path($$OUT_PWD/Pep9CPU.exe)\" \"$$shell_path($$OUT_PWD/Installer/packages/pep9cpu/data)\" &
+    #Execute windeployqt to copy over needed binaries
+    #Need to prune extra unneeded libraries, but the first goal is to get a working standalone program
+    QMAKE_POST_LINK += \"$$QtDir/bin/windeployqt\" --no-translations --no-system-d3d-compiler \"$$OUT_PWD/Installer/packages/pep9cpu/data/Pep9CPU.exe\" &
+    #Execute repository creator
+    QMAKE_POST_LINK += \"$$QtInstallerBin/repogen\" --update-new-components -p $$OUT_PWD/Installer/packages $$repoDir &
+    #Create installer
+    QMAKE_POST_LINK += \"$$QtInstallerBin/binarycreator\" -c \"$$OUT_PWD/Installer/config/config.xml\" -p \"$$OUT_PWD/Installer/packages\" \
+ \"$$OUT_PWD/Installer/$$OutputInstallerName"Win"\" &
+}
+
+#Since there is no native QT deploy tool for Linux, one must be added in the project configuration
+#This condition is to make sure that a tool was provided as an argument to qmake
+else:linux:isEmpty(LINUX_DEPLOY){
+    warning("Attempting a Linux build, but no path to the build tool was provided")
+}
+
+#Then linuxdeployqt is available, and it should be used to make a working installer for linux.
+else:linux{
+    message("This is where the linux build code will go")
+}
