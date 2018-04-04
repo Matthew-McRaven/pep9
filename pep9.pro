@@ -47,7 +47,36 @@ HEADERS += mainwindow.h \
     aboutpep.h \
     memorycellgraphicsitem.h \
     stackframefsm.h \
-    byteconverterinstr.h
+    byteconverterinstr.h \
+    aboutpep.h \
+    argument.h \
+    asm.h \
+    assemblerlistingpane.h \
+    byteconverterbin.h \
+    byteconverterchar.h \
+    byteconverterdec.h \
+    byteconverterhex.h \
+    byteconverterinstr.h \
+    code.h \
+    cpphighlighter.h \
+    cpupane.h \
+    enu.h \
+    helpdialog.h \
+    inputpane.h \
+    listingtracepane.h \
+    mainwindow.h \
+    memorycellgraphicsitem.h \
+    memorydumppane.h \
+    memorytracepane.h \
+    objectcodepane.h \
+    outputpane.h \
+    pep.h \
+    pephighlighter.h \
+    redefinemnemonicsdialog.h \
+    sim.h \
+    sourcecodepane.h \
+    stackframefsm.h \
+    terminalpane.h
 FORMS += mainwindow.ui \
     sourcecodepane.ui \
     objectcodepane.ui \
@@ -94,6 +123,69 @@ SOURCES += main.cpp \
     aboutpep.cpp \
     memorycellgraphicsitem.cpp \
     stackframefsm.cpp \
-    byteconverterinstr.cpp
+    byteconverterinstr.cpp \
+    aboutpep.cpp \
+    asm.cpp \
+    assemblerlistingpane.cpp \
+    byteconverterbin.cpp \
+    byteconverterchar.cpp \
+    byteconverterdec.cpp \
+    byteconverterhex.cpp \
+    byteconverterinstr.cpp \
+    code.cpp \
+    cpphighlighter.cpp \
+    cpupane.cpp \
+    helpdialog.cpp \
+    inputpane.cpp \
+    listingtracepane.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    memorycellgraphicsitem.cpp \
+    memorydumppane.cpp \
+    memorytracepane.cpp \
+    objectcodepane.cpp \
+    outputpane.cpp \
+    pep.cpp \
+    pephighlighter.cpp \
+    redefinemnemonicsdialog.cpp \
+    sim.cpp \
+    sourcecodepane.cpp \
+    stackframefsm.cpp \
+    terminalpane.cpp \
+    help/figures/fig0519.c \
+    help/figures/fig0522.c \
+    help/figures/fig0527.c \
+    help/figures/fig0604.c \
+    help/figures/fig0606.c \
+    help/figures/fig0608.c \
+    help/figures/fig0610.c \
+    help/figures/fig0612.c \
+    help/figures/fig0614.c \
+    help/figures/fig0618.c \
+    help/figures/fig0621.c \
+    help/figures/fig0623.c \
+    help/figures/fig0625.c \
+    help/figures/fig0627.c \
+    help/figures/fig0629.c \
+    help/figures/fig0632.c \
+    help/figures/fig0634.c \
+    help/figures/fig0636.c \
+    help/figures/fig0638.c \
+    help/figures/fig0640.c \
+    help/figures/fig0642.c \
+    help/figures/fig0644.c \
+    help/figures/fig0646.c \
+    help/figures/fig0648.c
 RESOURCES += pep9resources.qrc \
     helpresources.qrc
+
+DISTFILES += \
+    config/control.js \
+    packages/pep9/installscript.js \
+    config/DeployWindows.pdf \
+    config/DeployWindows2.pdf \
+    config/configlinux.xml \
+    config/configwin32.xml \
+    packages/pep9/package.xml \
+    config/DeployMac.txt \
+    packages/pep9/License.txt
