@@ -126,63 +126,25 @@ QMap<QString, Enu::EMnemonic> Pep::mnemonToEnumMap;
 void Pep::initEnumMnemonMaps()
 {
     enumToMnemonMap.clear(); mnemonToEnumMap.clear(); // Can be called from Redefine Mnemonics
-    enumToMnemonMap.insert(ADDA, "ADDA"); mnemonToEnumMap.insert("ADDA", ADDA);
-    enumToMnemonMap.insert(ADDX, "ADDX"); mnemonToEnumMap.insert("ADDX", ADDX);
-    enumToMnemonMap.insert(ADDSP, "ADDSP"); mnemonToEnumMap.insert("ADDSP", ADDSP);
-    enumToMnemonMap.insert(ANDA, "ANDA"); mnemonToEnumMap.insert("ANDA", ANDA);
-    enumToMnemonMap.insert(ANDX, "ANDX"); mnemonToEnumMap.insert("ANDX", ANDX);
-    enumToMnemonMap.insert(ASLA, "ASLA"); mnemonToEnumMap.insert("ASLA", ASLA);
-    enumToMnemonMap.insert(ASLX, "ASLX"); mnemonToEnumMap.insert("ASLX", ASLX);
-    enumToMnemonMap.insert(ASRA, "ASRA"); mnemonToEnumMap.insert("ASRA", ASRA);
-    enumToMnemonMap.insert(ASRX, "ASRX"); mnemonToEnumMap.insert("ASRX", ASRX);
-    enumToMnemonMap.insert(BR, "BR"); mnemonToEnumMap.insert("BR", BR);
-    enumToMnemonMap.insert(BRC, "BRC"); mnemonToEnumMap.insert("BRC", BRC);
-    enumToMnemonMap.insert(BREQ, "BREQ"); mnemonToEnumMap.insert("BREQ", BREQ);
-    enumToMnemonMap.insert(BRGE, "BRGE"); mnemonToEnumMap.insert("BRGE", BRGE);
-    enumToMnemonMap.insert(BRGT, "BRGT"); mnemonToEnumMap.insert("BRGT", BRGT);
-    enumToMnemonMap.insert(BRLE, "BRLE"); mnemonToEnumMap.insert("BRLE", BRLE);
-    enumToMnemonMap.insert(BRLT, "BRLT"); mnemonToEnumMap.insert("BRLT", BRLT);
-    enumToMnemonMap.insert(BRNE, "BRNE"); mnemonToEnumMap.insert("BRNE", BRNE);
-    enumToMnemonMap.insert(BRV, "BRV"); mnemonToEnumMap.insert("BRV", BRV);
-    enumToMnemonMap.insert(CALL, "CALL"); mnemonToEnumMap.insert("CALL", CALL);
-    enumToMnemonMap.insert(CPBA, "CPBA"); mnemonToEnumMap.insert("CPBA", CPBA);
-    enumToMnemonMap.insert(CPBX, "CPBX"); mnemonToEnumMap.insert("CPBX", CPBX);
-    enumToMnemonMap.insert(CPWA, "CPWA"); mnemonToEnumMap.insert("CPWA", CPWA);
-    enumToMnemonMap.insert(CPWX, "CPWX"); mnemonToEnumMap.insert("CPWX", CPWX);
-    enumToMnemonMap.insert(DECI, defaultNonUnaryMnemonic1); mnemonToEnumMap.insert(defaultNonUnaryMnemonic1, DECI);
-    enumToMnemonMap.insert(DECO, defaultNonUnaryMnemonic2); mnemonToEnumMap.insert(defaultNonUnaryMnemonic2, DECO);
-    enumToMnemonMap.insert(HEXO, defaultNonUnaryMnemonic3); mnemonToEnumMap.insert(defaultNonUnaryMnemonic3, HEXO);
-    enumToMnemonMap.insert(LDBA, "LDBA"); mnemonToEnumMap.insert("LDBA", LDBA);
-    enumToMnemonMap.insert(LDWA, "LDWA"); mnemonToEnumMap.insert("LDWA", LDWA);
-    enumToMnemonMap.insert(LDBX, "LDBX"); mnemonToEnumMap.insert("LDBX", LDBX);
-    enumToMnemonMap.insert(LDWX, "LDWX"); mnemonToEnumMap.insert("LDWX", LDWX);
-    enumToMnemonMap.insert(MOVAFLG, "MOVAFLG"); mnemonToEnumMap.insert("MOVAFLG", MOVAFLG);
-    enumToMnemonMap.insert(MOVFLGA, "MOVFLGA"); mnemonToEnumMap.insert("MOVFLGA", MOVFLGA);
-    enumToMnemonMap.insert(MOVSPA, "MOVSPA"); mnemonToEnumMap.insert("MOVSPA", MOVSPA);
-    enumToMnemonMap.insert(NEGA, "NEGA"); mnemonToEnumMap.insert("NEGA", NEGA);
-    enumToMnemonMap.insert(NEGX, "NEGX"); mnemonToEnumMap.insert("NEGX", NEGX);
+
+    QMetaObject meta = Enu::staticMetaObject;
+    QMetaEnum metaEnum = meta.enumerator(meta.indexOfEnumerator("EMnemonic"));
+    QString tempqs;
+    for(int it = 0; it < metaEnum.keyCount(); it++)
+    {
+        EMnemonic tempi = static_cast<EMnemonic>(metaEnum.value(it));
+        tempqs = QString(metaEnum.key(it)).toUpper();
+        enumToMnemonMap.insert(tempi, tempqs); mnemonToEnumMap.insert(tempqs, tempi);
+    }
+
+    //Lastly, override whatever the above enumerator put in for the redefinable mnemonics
     enumToMnemonMap.insert(NOP, defaultNonUnaryMnemonic0); mnemonToEnumMap.insert(defaultNonUnaryMnemonic0, NOP);
     enumToMnemonMap.insert(NOP0, defaultUnaryMnemonic0); mnemonToEnumMap.insert(defaultUnaryMnemonic0, NOP0);
     enumToMnemonMap.insert(NOP1, defaultUnaryMnemonic1); mnemonToEnumMap.insert(defaultUnaryMnemonic1, NOP1);
-    enumToMnemonMap.insert(NOTA, "NOTA"); mnemonToEnumMap.insert("NOTA", NOTA);
-    enumToMnemonMap.insert(NOTX, "NOTX"); mnemonToEnumMap.insert("NOTX", NOTX);
-    enumToMnemonMap.insert(ORA, "ORA"); mnemonToEnumMap.insert("ORA", ORA);
-    enumToMnemonMap.insert(ORX, "ORX"); mnemonToEnumMap.insert("ORX", ORX);
-    enumToMnemonMap.insert(RET, "RET"); mnemonToEnumMap.insert("RET", RET);
-    enumToMnemonMap.insert(RETTR, "RETTR"); mnemonToEnumMap.insert("RETTR", RETTR);
-    enumToMnemonMap.insert(ROLA, "ROLA"); mnemonToEnumMap.insert("ROLA", ROLA);
-    enumToMnemonMap.insert(ROLX, "ROLX"); mnemonToEnumMap.insert("ROLX", ROLX);
-    enumToMnemonMap.insert(RORA, "RORA"); mnemonToEnumMap.insert("RORA", RORA);
-    enumToMnemonMap.insert(RORX, "RORX"); mnemonToEnumMap.insert("RORX", RORX);
-    enumToMnemonMap.insert(STBA, "STBA"); mnemonToEnumMap.insert("STBA", STBA);
-    enumToMnemonMap.insert(STBX, "STBX"); mnemonToEnumMap.insert("STBX", STBX);
-    enumToMnemonMap.insert(STWA, "STWA"); mnemonToEnumMap.insert("STWA", STWA);
-    enumToMnemonMap.insert(STWX, "STWX"); mnemonToEnumMap.insert("STWX", STWX);
-    enumToMnemonMap.insert(STOP, "STOP"); mnemonToEnumMap.insert("STOP", STOP);
+    enumToMnemonMap.insert(DECI, defaultNonUnaryMnemonic1); mnemonToEnumMap.insert(defaultNonUnaryMnemonic1, DECI);
+    enumToMnemonMap.insert(DECO, defaultNonUnaryMnemonic2); mnemonToEnumMap.insert(defaultNonUnaryMnemonic2, DECO);
+    enumToMnemonMap.insert(HEXO, defaultNonUnaryMnemonic3); mnemonToEnumMap.insert(defaultNonUnaryMnemonic3, HEXO);
     enumToMnemonMap.insert(STRO, defaultNonUnaryMnemonic4); mnemonToEnumMap.insert(defaultNonUnaryMnemonic4, STRO);
-    enumToMnemonMap.insert(SUBA, "SUBA"); mnemonToEnumMap.insert("SUBA", SUBA);
-    enumToMnemonMap.insert(SUBX, "SUBX"); mnemonToEnumMap.insert("SUBX", SUBX);
-    enumToMnemonMap.insert(SUBSP, "SUBSP"); mnemonToEnumMap.insert("SUBSP", SUBSP);
 }
 
 // Maps to characterize each instruction
@@ -190,76 +152,85 @@ QMap<Enu::EMnemonic, int> Pep::opCodeMap;
 QMap<Enu::EMnemonic, bool> Pep::isUnaryMap;
 QMap<Enu::EMnemonic, bool> Pep::addrModeRequiredMap;
 QMap<Enu::EMnemonic, bool> Pep::isTrapMap;
+void initMnemMapHelper(EMnemonic mnemon,int start,bool unary,bool addrModeReq,bool isTrap)
+{
+    Pep::opCodeMap.insert(mnemon, start); Pep::isUnaryMap.insert(mnemon, unary);
+    Pep::addrModeRequiredMap.insert(mnemon, addrModeReq); Pep::isTrapMap.insert(mnemon, isTrap);
+}
 
 void Pep::initMnemonicMaps()
 {
-    opCodeMap.insert(ADDA, 96); isUnaryMap.insert(ADDA, false); addrModeRequiredMap.insert(ADDA, true); isTrapMap.insert(ADDA, false);
-    opCodeMap.insert(ADDX, 104); isUnaryMap.insert(ADDX, false); addrModeRequiredMap.insert(ADDX, true); isTrapMap.insert(ADDX, false);
-    opCodeMap.insert(ADDSP, 80); isUnaryMap.insert(ADDSP, false); addrModeRequiredMap.insert(ADDSP, true); isTrapMap.insert(ADDSP, false);
-    opCodeMap.insert(ANDA, 128); isUnaryMap.insert(ANDA, false); addrModeRequiredMap.insert(ANDA, true); isTrapMap.insert(ANDA, false);
-    opCodeMap.insert(ANDX, 136); isUnaryMap.insert(ANDX, false); addrModeRequiredMap.insert(ANDX, true); isTrapMap.insert(ANDX, false);
-    opCodeMap.insert(ASLA, 10); isUnaryMap.insert(ASLA, true); addrModeRequiredMap.insert(ASLA, true); isTrapMap.insert(ASLA, false);
-    opCodeMap.insert(ASLX, 11); isUnaryMap.insert(ASLX, true); addrModeRequiredMap.insert(ASLX, true); isTrapMap.insert(ASLX, false);
-    opCodeMap.insert(ASRA, 12); isUnaryMap.insert(ASRA, true); addrModeRequiredMap.insert(ASRA, true); isTrapMap.insert(ASRA, false);
-    opCodeMap.insert(ASRX, 13); isUnaryMap.insert(ASRX, true); addrModeRequiredMap.insert(ASRX, true); isTrapMap.insert(ASRX, false);
+    initMnemMapHelper(ADDA, 96, false, true, false);
+    initMnemMapHelper(ADDX, 104, false, true, false);
+    initMnemMapHelper(ADDSP, 80, false, true, false);
+    initMnemMapHelper(ANDA, 128, false, true, false);
+    initMnemMapHelper(ANDX, 136, false, true, false);
+    initMnemMapHelper(ASLA, 10, true, false, false);
+    initMnemMapHelper(ASLX, 11, true, false, false);
+    initMnemMapHelper(ASRA, 12, true, false, false);
+    initMnemMapHelper(ASRX, 13, true, false, false);
 
-    opCodeMap.insert(BR, 18); isUnaryMap.insert(BR, false); addrModeRequiredMap.insert(BR, false); isTrapMap.insert(BR, false);
-    opCodeMap.insert(BRC, 34); isUnaryMap.insert(BRC, false); addrModeRequiredMap.insert(BRC, false); isTrapMap.insert(BRC, false);
-    opCodeMap.insert(BREQ, 24); isUnaryMap.insert(BREQ, false); addrModeRequiredMap.insert(BREQ, false); isTrapMap.insert(BREQ, false);
-    opCodeMap.insert(BRGE, 28); isUnaryMap.insert(BRGE, false); addrModeRequiredMap.insert(BRGE, false); isTrapMap.insert(BRGE, false);
-    opCodeMap.insert(BRGT, 30); isUnaryMap.insert(BRGT, false); addrModeRequiredMap.insert(BRGT, false); isTrapMap.insert(BRGT, false);
-    opCodeMap.insert(BRLE, 20); isUnaryMap.insert(BRLE, false); addrModeRequiredMap.insert(BRLE, false); isTrapMap.insert(BRLE, false);
-    opCodeMap.insert(BRLT, 22); isUnaryMap.insert(BRLT, false); addrModeRequiredMap.insert(BRLT, false); isTrapMap.insert(BRLT, false);
-    opCodeMap.insert(BRNE, 26); isUnaryMap.insert(BRNE, false); addrModeRequiredMap.insert(BRNE, false); isTrapMap.insert(BRNE, false);
-    opCodeMap.insert(BRV, 32); isUnaryMap.insert(BRV, false); addrModeRequiredMap.insert(BRV, false); isTrapMap.insert(BRV, false);
+    initMnemMapHelper(BR, 18, false, false, false);
+    initMnemMapHelper(BRC, 34, false, false, false);
+    initMnemMapHelper(BREQ, 24, false, false, false);
+    initMnemMapHelper(BRGE, 28, false, false, false);
+    initMnemMapHelper(BRGT, 30, false, false, false);
+    initMnemMapHelper(BRLE, 20, false, false, false);
+    initMnemMapHelper(BRLT, 22, false, false, false);
+    initMnemMapHelper(BRNE, 26, false, false, false);
+    initMnemMapHelper(BRV, 32, false, false, false);
 
-    opCodeMap.insert(CALL, 36); isUnaryMap.insert(CALL, false); addrModeRequiredMap.insert(CALL, false); isTrapMap.insert(CALL, false);
-    opCodeMap.insert(CPBA, 176); isUnaryMap.insert(CPBA, false); addrModeRequiredMap.insert(CPBA, true); isTrapMap.insert(CPBA, false);
-    opCodeMap.insert(CPBX, 184); isUnaryMap.insert(CPBX, false); addrModeRequiredMap.insert(CPBX, true); isTrapMap.insert(CPBX, false);
-    opCodeMap.insert(CPWA, 160); isUnaryMap.insert(CPWA, false); addrModeRequiredMap.insert(CPWA, true); isTrapMap.insert(CPWA, false);
-    opCodeMap.insert(CPWX, 168); isUnaryMap.insert(CPWX, false); addrModeRequiredMap.insert(CPWX, true); isTrapMap.insert(CPWX, false);
+    initMnemMapHelper(CALL, 36, false, false, false);
+    initMnemMapHelper(CPBA, 176, false, true, false);
+    initMnemMapHelper(CPBX, 184, false, true, false);
+    initMnemMapHelper(CPWA, 160, false, true, false);
+    initMnemMapHelper(CPWX, 168, false, true, false);
 
-    opCodeMap.insert(DECI, 48); isUnaryMap.insert(DECI, false); addrModeRequiredMap.insert(DECI, true); isTrapMap.insert(DECI, true);
-    opCodeMap.insert(DECO, 56); isUnaryMap.insert(DECO, false); addrModeRequiredMap.insert(DECO, true); isTrapMap.insert(DECO, true);
+    initMnemMapHelper(DECI, 48, false, true, true);
+    initMnemMapHelper(DECO, 56, false, true, true);
 
-    opCodeMap.insert(HEXO, 64); isUnaryMap.insert(HEXO, false); addrModeRequiredMap.insert(HEXO, true); isTrapMap.insert(HEXO, true);
+    initMnemMapHelper(HEXO, 64, false, true, true);
 
-    opCodeMap.insert(LDBA, 208); isUnaryMap.insert(LDBA, false); addrModeRequiredMap.insert(LDBA, true); isTrapMap.insert(LDBA, false);
-    opCodeMap.insert(LDBX, 216); isUnaryMap.insert(LDBX, false); addrModeRequiredMap.insert(LDBX, true); isTrapMap.insert(LDBX, false);
-    opCodeMap.insert(LDWA, 192); isUnaryMap.insert(LDWA, false); addrModeRequiredMap.insert(LDWA, true); isTrapMap.insert(LDWA, false);
-    opCodeMap.insert(LDWX, 200); isUnaryMap.insert(LDWX, false); addrModeRequiredMap.insert(LDWX, true); isTrapMap.insert(LDWX, false);
+    initMnemMapHelper(LDBA, 208, false, true, false);
+    initMnemMapHelper(LDBX, 216, false, true, false);
+    initMnemMapHelper(LDWA, 192, false, true, false);
+    initMnemMapHelper(LDWX, 200, false, true, false);
 
-    opCodeMap.insert(MOVAFLG, 5); isUnaryMap.insert(MOVAFLG, true); addrModeRequiredMap.insert(MOVAFLG, true); isTrapMap.insert(MOVAFLG, false);
-    opCodeMap.insert(MOVFLGA, 4); isUnaryMap.insert(MOVFLGA, true); addrModeRequiredMap.insert(MOVFLGA, true); isTrapMap.insert(MOVFLGA, false);
-    opCodeMap.insert(MOVSPA, 3); isUnaryMap.insert(MOVSPA, true); addrModeRequiredMap.insert(MOVSPA, true); isTrapMap.insert(MOVSPA, false);
+#pragma message("I'm not sure these instructions should have a required addressing mode - Matthew McRaven 6/26/2018")
+    initMnemMapHelper(MOVAFLG, 5, true, false, false);
+    initMnemMapHelper(MOVFLGA, 4, true, false, false);
+    initMnemMapHelper(MOVSPA, 3, true, false, false);
 
-    opCodeMap.insert(NEGA, 8); isUnaryMap.insert(NEGA, true); addrModeRequiredMap.insert(NEGA, true); isTrapMap.insert(NEGA, false);
-    opCodeMap.insert(NEGX, 9); isUnaryMap.insert(NEGX, true); addrModeRequiredMap.insert(NEGX, true); isTrapMap.insert(NEGX, false);
-    opCodeMap.insert(NOP, 40); isUnaryMap.insert(NOP, false); addrModeRequiredMap.insert(NOP, true); isTrapMap.insert(NOP, true);
-    opCodeMap.insert(NOP0, 38); isUnaryMap.insert(NOP0, true); addrModeRequiredMap.insert(NOP0, true); isTrapMap.insert(NOP0, true);
-    opCodeMap.insert(NOP1, 39); isUnaryMap.insert(NOP1, true); addrModeRequiredMap.insert(NOP1, true); isTrapMap.insert(NOP1, true);
-    opCodeMap.insert(NOTA, 6); isUnaryMap.insert(NOTA, true); addrModeRequiredMap.insert(NOTA, true); isTrapMap.insert(NOTA, false);
-    opCodeMap.insert(NOTX, 7); isUnaryMap.insert(NOTX, true); addrModeRequiredMap.insert(NOTX, true); isTrapMap.insert(NOTX, false);
+    //opCodeMap.insert(MOVAFLG, 5); isUnaryMap.insert(MOVAFLG, true); addrModeRequiredMap.insert(MOVAFLG, true); isTrapMap.insert(MOVAFLG, false);
+    //opCodeMap.insert(MOVFLGA, 4); isUnaryMap.insert(MOVFLGA, true); addrModeRequiredMap.insert(MOVFLGA, true); isTrapMap.insert(MOVFLGA, false);
+    //opCodeMap.insert(MOVSPA, 3); isUnaryMap.insert(MOVSPA, true); addrModeRequiredMap.insert(MOVSPA, true); isTrapMap.insert(MOVSPA, false);
+    initMnemMapHelper(NEGA, 8, true, false, false);
+    initMnemMapHelper(NEGX, 9, true, false, false);
+    initMnemMapHelper(NOP, 40, false, true, true);
+    initMnemMapHelper(NOP0, 38, true, false, true);
+    initMnemMapHelper(NOP1, 39, true, false, true);
+    initMnemMapHelper(NOTA, 6, true, false, false);
+    initMnemMapHelper(NOTX, 7, true, false, false);
 
-    opCodeMap.insert(ORA, 144); isUnaryMap.insert(ORA, false); addrModeRequiredMap.insert(ORA, true); isTrapMap.insert(ORA, false);
-    opCodeMap.insert(ORX, 152); isUnaryMap.insert(ORX, false); addrModeRequiredMap.insert(ORX, true); isTrapMap.insert(ORX, false);
+    initMnemMapHelper(ORA, 144, false, true, true);
+    initMnemMapHelper(ORX, 152, false, true, true);
 
-    opCodeMap.insert(RET, 1); isUnaryMap.insert(RET, true); addrModeRequiredMap.insert(RET, true); isTrapMap.insert(RET, false);
-    opCodeMap.insert(RETTR, 2); isUnaryMap.insert(RETTR, true); addrModeRequiredMap.insert(RETTR, true); isTrapMap.insert(RETTR, false);
-    opCodeMap.insert(ROLA, 14); isUnaryMap.insert(ROLA, true); addrModeRequiredMap.insert(ROLA, true); isTrapMap.insert(ROLA, false);
-    opCodeMap.insert(ROLX, 15); isUnaryMap.insert(ROLX, true); addrModeRequiredMap.insert(ROLX, true); isTrapMap.insert(ROLX, false);
-    opCodeMap.insert(RORA, 16); isUnaryMap.insert(RORA, true); addrModeRequiredMap.insert(RORA, true); isTrapMap.insert(RORA, false);
-    opCodeMap.insert(RORX, 17); isUnaryMap.insert(RORX, true); addrModeRequiredMap.insert(RORX, true); isTrapMap.insert(RORX, false);
+    initMnemMapHelper(RET, 1, true, false, false);
+    initMnemMapHelper(RETTR, 2, true, false, false);
+    initMnemMapHelper(ROLA, 14, false, true, false);
+    initMnemMapHelper(ROLX, 15, true, false, false);
+    initMnemMapHelper(RORA, 16, true, false, false);
+    initMnemMapHelper(RORX, 17, true, false, false);
 
-    opCodeMap.insert(STBA, 240); isUnaryMap.insert(STBA, false); addrModeRequiredMap.insert(STBA, true); isTrapMap.insert(STBA, false);
-    opCodeMap.insert(STBX, 248); isUnaryMap.insert(STBX, false); addrModeRequiredMap.insert(STBX, true); isTrapMap.insert(STBX, false);
-    opCodeMap.insert(STWA, 224); isUnaryMap.insert(STWA, false); addrModeRequiredMap.insert(STWA, true); isTrapMap.insert(STWA, false);
-    opCodeMap.insert(STWX, 232); isUnaryMap.insert(STWX, false); addrModeRequiredMap.insert(STWX, true); isTrapMap.insert(STWX, false);
-    opCodeMap.insert(STOP, 0); isUnaryMap.insert(STOP, true); addrModeRequiredMap.insert(STOP, true); isTrapMap.insert(STOP, false);
-    opCodeMap.insert(STRO, 72); isUnaryMap.insert(STRO, false); addrModeRequiredMap.insert(STRO, true); isTrapMap.insert(STRO, true);
-    opCodeMap.insert(SUBA, 112); isUnaryMap.insert(SUBA, false); addrModeRequiredMap.insert(SUBA, true); isTrapMap.insert(SUBA, false);
-    opCodeMap.insert(SUBX, 120); isUnaryMap.insert(SUBX, false); addrModeRequiredMap.insert(SUBX, true); isTrapMap.insert(SUBX, false);
-    opCodeMap.insert(SUBSP, 88); isUnaryMap.insert(SUBSP, false); addrModeRequiredMap.insert(SUBSP, true); isTrapMap.insert(SUBSP, false);
+    initMnemMapHelper(STBA, 240, false, true, false);
+    initMnemMapHelper(STBX, 248, false, true, false);
+    initMnemMapHelper(STWA, 224, false, true, false);
+    initMnemMapHelper(STWX, 232, false, true, false);
+    initMnemMapHelper(STOP, 0, true, false, false);
+    initMnemMapHelper(STRO, 72, false, true, true);
+    initMnemMapHelper(SUBA, 112, false, true, false);
+    initMnemMapHelper(SUBX, 120, false, true, false);
+    initMnemMapHelper(SUBSP, 88, false, true, false);
 }
 
 // Map to specify legal addressing modes for each instruction
@@ -334,12 +305,13 @@ QMap<int, Qt::CheckState> Pep::listingRowCheckedOS;
 // Decoder tables
 QVector<Enu::EMnemonic> Pep::decodeMnemonic(256);
 QVector<Enu::EAddrMode> Pep::decodeAddrMode(256);
-void decoderTableAHelper(EMnemonic val,int startIdx)
+void initDecoderTableAHelper(EMnemonic val,int startIdx)
 {
     Pep::decodeMnemonic[startIdx] = val; Pep::decodeAddrMode[startIdx] = I;
     Pep::decodeMnemonic[startIdx + 1] = val; Pep::decodeAddrMode[startIdx + 1] = X;
 }
-void decoderTableAAAHelper(EMnemonic val,int startIdx)
+
+void initDecoderTableAAAHelper(EMnemonic val,int startIdx)
 {
         Pep::decodeMnemonic[startIdx + 0] = val; Pep::decodeAddrMode[startIdx + 0] = I;
         Pep::decodeMnemonic[startIdx + 1] = val; Pep::decodeAddrMode[startIdx + 1] = D;
@@ -350,13 +322,15 @@ void decoderTableAAAHelper(EMnemonic val,int startIdx)
         Pep::decodeMnemonic[startIdx + 6] = val; Pep::decodeAddrMode[startIdx + 6] = SX;
         Pep::decodeMnemonic[startIdx + 7] = val; Pep::decodeAddrMode[startIdx + 7] = SFX;
 }
-void decoderTableHelperTrap(EMnemonic val,int startIdx,int distance){
+
+void initDecoderTableHelperTrap(EMnemonic val,int startIdx,int distance){
     for(int it=0;it<distance;it++)
     {
         // Note that the trap instructions are all unary at the machine level
         Pep::decodeMnemonic[startIdx + it] = val; Pep::decodeAddrMode[startIdx + it] = NONE;
     }
 }
+
 void Pep::initDecoderTables()
 {
     decodeMnemonic[0] = STOP; decodeAddrMode[0] = NONE;
@@ -379,47 +353,47 @@ void Pep::initDecoderTables()
     decodeMnemonic[16] = RORA; decodeAddrMode[16] = NONE;
     decodeMnemonic[17] = RORX; decodeAddrMode[17] = NONE;
 
-    decoderTableAHelper(BR,18);
-    decoderTableAHelper(BRLE,20);
-    decoderTableAHelper(BRLT,22);
-    decoderTableAHelper(BREQ,24);
-    decoderTableAHelper(BRNE,26);
-    decoderTableAHelper(BRGE,28);
-    decoderTableAHelper(BRGT,30);
-    decoderTableAHelper(BRV,32);
-    decoderTableAHelper(BRC,34);
-    decoderTableAHelper(CALL,36);
+    initDecoderTableAHelper(BR, 18);
+    initDecoderTableAHelper(BRLE, 20);
+    initDecoderTableAHelper(BRLT, 22);
+    initDecoderTableAHelper(BREQ, 24);
+    initDecoderTableAHelper(BRNE, 26);
+    initDecoderTableAHelper(BRGE, 28);
+    initDecoderTableAHelper(BRGT, 30);
+    initDecoderTableAHelper(BRV, 32);
+    initDecoderTableAHelper(BRC, 34);
+    initDecoderTableAHelper(CALL, 36);
 
-    decoderTableHelperTrap(NOP0,38,1);
-    decoderTableHelperTrap(NOP1,39,1);
-    decoderTableHelperTrap(NOP,40,8);
-    decoderTableHelperTrap(DECI,48,8);
-    decoderTableHelperTrap(DECO,56,8);
-    decoderTableHelperTrap(HEXO,64,8);
-    decoderTableHelperTrap(STRO,72,8);
+    initDecoderTableHelperTrap(NOP0, 38, 1);
+    initDecoderTableHelperTrap(NOP1, 39, 1);
+    initDecoderTableHelperTrap(NOP, 40, 8);
+    initDecoderTableHelperTrap(DECI, 48, 8);
+    initDecoderTableHelperTrap(DECO, 56, 8);
+    initDecoderTableHelperTrap(HEXO, 64, 8);
+    initDecoderTableHelperTrap(STRO, 72, 8);
 
-    decoderTableAAAHelper(ADDSP,80);
-    decoderTableAAAHelper(SUBSP,88);
-    decoderTableAAAHelper(ADDA,96);
-    decoderTableAAAHelper(ADDX,104);
-    decoderTableAAAHelper(SUBA,112);
-    decoderTableAAAHelper(SUBX,120);
-    decoderTableAAAHelper(ANDA,128);
-    decoderTableAAAHelper(ANDX,136);
-    decoderTableAAAHelper(ORA,144);
-    decoderTableAAAHelper(ORX,152);
-    decoderTableAAAHelper(CPWA,160);
-    decoderTableAAAHelper(CPWX,168);
-    decoderTableAAAHelper(CPBA,176);
-    decoderTableAAAHelper(CPBX,184);
-    decoderTableAAAHelper(LDWA,192);
-    decoderTableAAAHelper(LDWX,200);
-    decoderTableAAAHelper(LDBA,208);
-    decoderTableAAAHelper(LDBX,216);
-    decoderTableAAAHelper(STWA,224);
-    decoderTableAAAHelper(STWX,232);
-    decoderTableAAAHelper(STBA,240);
-    decoderTableAAAHelper(STBX,248);
+    initDecoderTableAAAHelper(ADDSP, 80);
+    initDecoderTableAAAHelper(SUBSP, 88);
+    initDecoderTableAAAHelper(ADDA, 96);
+    initDecoderTableAAAHelper(ADDX, 104);
+    initDecoderTableAAAHelper(SUBA, 112);
+    initDecoderTableAAAHelper(SUBX, 120);
+    initDecoderTableAAAHelper(ANDA, 128);
+    initDecoderTableAAAHelper(ANDX, 136);
+    initDecoderTableAAAHelper(ORA, 144);
+    initDecoderTableAAAHelper(ORX, 152);
+    initDecoderTableAAAHelper(CPWA, 160);
+    initDecoderTableAAAHelper(CPWX, 168);
+    initDecoderTableAAAHelper(CPBA, 176);
+    initDecoderTableAAAHelper(CPBX, 184);
+    initDecoderTableAAAHelper(LDWA, 192);
+    initDecoderTableAAAHelper(LDWX, 200);
+    initDecoderTableAAAHelper(LDBA, 208);
+    initDecoderTableAAAHelper(LDBX, 216);
+    initDecoderTableAAAHelper(STWA, 224);
+    initDecoderTableAAAHelper(STWX, 232);
+    initDecoderTableAAAHelper(STBA, 240);
+    initDecoderTableAAAHelper(STBX, 248);
 }
 
 // .BURN and the ROM state
