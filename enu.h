@@ -21,9 +21,10 @@
 
 #ifndef ENU_H
 #define ENU_H
-
+#include <QtCore>
 namespace Enu
 {
+   Q_NAMESPACE;
    // Instruction mnemonics
    enum EMnemonic
    {
@@ -39,7 +40,7 @@ namespace Enu
         RET, RETTR, ROLA, ROLX, RORA, RORX,
         STBA, STBX, STWA, STWX, STOP, STRO, SUBA, SUBX, SUBSP
         };
-
+    Q_ENUM_NS(EMnemonic);
     // Addressing modes for instructions
     enum EAddrMode
     {
@@ -54,6 +55,7 @@ namespace Enu
         SFX = 128,
         ALL = 255
     };
+    Q_ENUM_NS(EAddrMode);
 
     // Format for symbols
     enum ESymbolFormat
